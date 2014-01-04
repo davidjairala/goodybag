@@ -1,0 +1,12 @@
+{
+  "default": {
+    "cookie_secret": "something_secret",
+    "port": 3000
+  },
+  "test": {
+  },
+  "development": {
+  },
+  "production": {
+  }
+}
