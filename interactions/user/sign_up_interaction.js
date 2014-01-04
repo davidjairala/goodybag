@@ -1,7 +1,7 @@
-var User          = require('../../models/user').User,
-    bcrypt        = require('bcrypt-nodejs'),
-    stringService = require('../../lib/string_service'),
-    InteractionError = require('../interaction_error').InteractionError;
+var User              = require('../../models/user').User,
+    stringService     = require('../../lib/string_service'),
+    InteractionError  = require('../interaction_error').InteractionError,
+    passwordHelper    = require('./password_interaction_helper');
 
 var SignUpInteraction = function SignUpInteraction (options) {
   options = options || {};
@@ -15,16 +15,10 @@ SignUpInteraction.prototype.valid = function valid () {
   return stringService.clean(this.password) !== '' && stringService.clean(this.username) !== '';
 }
 
-SignUpInteraction.prototype.hashPassword = function hashPassword (callback) {
-  bcrypt.hash(this.password, null, null, function(err, hash) {
-    return callback(err, hash);
-  });
-};
-
 SignUpInteraction.prototype.persist = function persist (callback) {
   var user  = new User({username: this.username, email: this.email});
 
-  this.hashPassword(function (err, hash) {
+  passwordHelper.hashPassword(this.password, function (err, hash) {
     user.password = hash;
 
     user.save(function (err, doc) {
