@@ -1,13 +1,15 @@
-var mongoose  = require('mongoose'),
-    Schema    = mongoose.Schema;
+var mongoose        = require('mongoose'),
+    Schema          = mongoose.Schema,
+    uniqueValidator = require('mongoose-unique-validator'),
+    timestamps      = require('mongoose-timestamp');
 
 var userSchema  = new Schema({
-  username:   String,
-  password:   String,
-  email:      String,
-  created_at: {type: Date, default: Date.now},
-  updated_at: {type: Date, default: Date.now}
+  username:   {type: String, required: true,  unique: true},
+  email:      {type: String,                  unique: true},
+  password:   {type: String, required: true}
 });
+userSchema.plugin(uniqueValidator);
+userSchema.plugin(timestamps);
 
 var User = mongoose.model('user', userSchema);
 

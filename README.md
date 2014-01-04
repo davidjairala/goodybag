@@ -12,8 +12,14 @@ cp config/config.example.json config/config.json
 npm install
 ```
 
+## Start the server
+
+```bash
+npm start
+```
+
 ## Run the tests
 
 ```bash
-jake tests:run
+npm test
 ```
