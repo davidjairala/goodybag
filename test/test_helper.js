@@ -1,5 +1,5 @@
-var MongoHelper       = require('../lib/mongo_helper').MongoHelper,
-    mongoHelper       = new MongoHelper(),
+var DBService         = require('../lib/db_service').DBService,
+    dbService         = new DBService(),
     express           = require('express'),
     app               = express(),
     expect            = require('expect.js'),
@@ -7,16 +7,16 @@ var MongoHelper       = require('../lib/mongo_helper').MongoHelper,
 
 before(function (done) {
   app.set('env', 'test');
-  mongoHelper.connect();
+  dbService.connect();
   done();
 });
 
 beforeEach(function (done) {
-  return mongoHelper.clearDB(done);
+  return dbService.clearDB(done);
 });
 
 after(function (done) {
-  mongoHelper.disconnect();
+  dbService.disconnect();
   done();
 });
 

@@ -8,7 +8,7 @@ var express         = require('express'),
     user            = require('./routes/user'),
     http            = require('http'),
     path            = require('path'),
-    MongoHelper     = require('./lib/mongo_helper').MongoHelper,
+    DBService       = require('./lib/db_service').DBService,
     app             = express(),
     _config         = require('./config/config'),
     config          = _config[app.get('env')],
@@ -30,8 +30,8 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to DB
-mongoHelper = new MongoHelper();
-mongoHelper.connect();
+dbService = new DBService();
+dbService.connect();
 
 // development only
 if ('development' == app.get('env')) {
