@@ -15,9 +15,9 @@ var express         = require('express'),
     default_config  = _config['default'];
 
 // all environments
-app.set('port', process.env.PORT || default_config['port']);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('port',         process.env.PORT || default_config['port']);
+app.set('views',        path.join(__dirname, 'views'));
+app.set('view engine',  'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
