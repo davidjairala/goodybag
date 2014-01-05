@@ -1,2 +1,4 @@
 node_modules/*
 config/config.json
+config/mongo_config.txt
+scripts/start_db.sh

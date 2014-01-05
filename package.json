@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start":  "node app.js",
+    "start":  "scripts/start_db.sh & ; node app.js",
     "test":   "NODE_ENV=test mocha test/**/* --reporter list"
   },
   "dependencies": {
