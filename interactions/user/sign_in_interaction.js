@@ -1,8 +1,10 @@
 var User              = require('../../models/user').User,
     bcrypt            = require('bcrypt-nodejs'),
+    crypto            = require('crypto'),
     InteractionError  = require('../interaction_error').InteractionError,
     passwordHelper    = require('./password_interaction_helper'),
-    stringService     = require('../../lib/string_service');
+    stringService     = require('../../lib/string_service'),
+    Session           = require('../../models/session').Session;
 
 var SignInInteraction = function SignInInteraction (options) {
   options = options || {};
@@ -59,8 +61,28 @@ SignInInteraction.prototype.user = function user (callback) {
   }
 };
 
-SignInInteraction.prototype.login = function login () {
+SignInInteraction.prototype.hash = function hash () {
+  return crypto.randomBytes(20).toString('hex');
+};
 
+SignInInteraction.prototype.createSession = function createSession (user, callback) {
+  var session = new Session({userId: user.id, hash: this.hash()});
+
+  session.save(function (err, doc) {
+    return callback(err, doc);
+  });
+};
+
+SignInInteraction.prototype.login = function login (callback) {
+  this.user(function (err, doc) {
+    if(err) {
+      return callback(err, null);
+    } else {
+      this.createSession(doc, function (err, doc) {
+        return callback(err, doc);
+      });
+    }
+  }.bind(this));
 };
 
 exports.SignInInteraction = SignInInteraction;

@@ -5,6 +5,33 @@ var expect            = require('expect.js'),
 
 describe('User Sign In Interaction', function () {
 
+  describe('#login', function () {
+
+    beforeEach(function (done) {
+      var sign_up_interaction = new SignUpInteraction({username: 'fakey', email: 'fakey@fake.com', password: 'real'});
+
+      sign_up_interaction.save(function (err, doc) {
+        done();
+      });
+    });
+
+    it('creates a session for the user', function (done) {
+      var interaction = new Interaction({username: 'fakey', password: 'real'});
+
+      interaction.login(function (err, doc) {
+        TestHelper.saveOk(err, doc);
+
+        expect(doc.hash).to.be.ok();
+
+        doc.user(function (err, _user) {
+          expect(doc.userId.toString()).to.equal(_user.id.toString());
+          done();
+        });
+      });
+    });
+
+  });
+
   describe('#valid', function () {
 
     describe('returns false when', function () {
