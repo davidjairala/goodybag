@@ -4,7 +4,7 @@ var User              = require('../../models/user').User,
     passwordHelper    = require('./password_interaction_helper'),
     stringService     = require('../../lib/string_service');
 
-var LogInInteraction = function LogInInteraction (options) {
+var SignInInteraction = function SignInInteraction (options) {
   options = options || {};
 
   this.username = options.username;
@@ -12,12 +12,12 @@ var LogInInteraction = function LogInInteraction (options) {
   this.email    = options.email;
 };
 
-LogInInteraction.prototype.valid = function valid () {
+SignInInteraction.prototype.valid = function valid () {
   return (stringService.clean(this.username) !== '' || stringService.clean(this.email) !== '') && 
           stringService.clean(this.password) !== '';
 }
 
-LogInInteraction.prototype.searchOptions = function searchOptions () {
+SignInInteraction.prototype.searchOptions = function searchOptions () {
   var options = {};
 
   if(stringService.clean(this.username) !== '')
@@ -28,8 +28,8 @@ LogInInteraction.prototype.searchOptions = function searchOptions () {
   return options;
 }
 
-LogInInteraction.prototype._findUser = function _findUser (callback) {
-  var genericError  = new InteractionError('log_in_interaction', 'invalid', 'Wrong username or password.');
+SignInInteraction.prototype._findUser = function _findUser (callback) {
+  var genericError  = new InteractionError('sign_in_interaction', 'invalid', 'Wrong username or password.');
 
   User.findOne(this.searchOptions(), function (err, doc) {
     if(err || !doc) {
@@ -46,11 +46,11 @@ LogInInteraction.prototype._findUser = function _findUser (callback) {
   }.bind(this));
 };
 
-LogInInteraction.prototype.user = function user (callback) {
+SignInInteraction.prototype.user = function user (callback) {
   var emptyError;
 
   if(!this.valid()) {
-    emptyError = new InteractionError('log_in_interaction', 'invalid', 'Please enter a username or email and a password.');
+    emptyError = new InteractionError('sign_in_interaction', 'invalid', 'Please enter a username or email and a password.');
     return callback(emptyError, null)
   } else {
     this._findUser(function (err, doc) {
@@ -59,8 +59,8 @@ LogInInteraction.prototype.user = function user (callback) {
   }
 };
 
-LogInInteraction.prototype.login = function login () {
+SignInInteraction.prototype.login = function login () {
 
 };
 
-exports.LogInInteraction = LogInInteraction;
+exports.SignInInteraction = SignInInteraction;
