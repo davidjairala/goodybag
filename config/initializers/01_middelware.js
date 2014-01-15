@@ -1,9 +1,9 @@
-exports.handler = function handler (app) {
-  var express         = require('express'),
-      default_config  = require('../config')['default'],
-      path            = require('path'),
-      connect         = require('connect');
+var express         = require('express'),
+    default_config  = require('../config')['default'],
+    path            = require('path'),
+    connect         = require('connect');
 
+exports.handler = function handler (app) {
   app.set('port',         process.env.PORT || default_config['port']);
   app.set('views',        path.join(__dirname, '..', '..', 'views'));
   app.set('view engine',  'ejs');
