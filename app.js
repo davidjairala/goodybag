@@ -4,14 +4,21 @@ var express         = require('express'),
     http            = require('http'),
     path            = require('path'),
     app             = express(),
-    route,
-    middelware;
+    middelware, initializer, route;
 
-// middlware
+// middleware
+fs.readdirSync(path.join(__dirname, 'config', 'middleware')).forEach(function (file) {
+  if(file.substr(-3) == '.js') {
+    middelware = require('./config/middleware/' + file);
+    middelware.handler(app);
+  }
+});
+
+// initializers
 fs.readdirSync(path.join(__dirname, 'config', 'initializers')).forEach(function (file) {
   if(file.substr(-3) == '.js') {
-    middelware = require('./config/initializers/' + file);
-    middelware.handler(app);
+    initializer = require('./config/initializers/' + file);
+    initializer.handler(app);
   }
 });
 
