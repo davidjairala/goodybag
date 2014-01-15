@@ -1,5 +1,4 @@
-var _config         = require('../config/config'),
-    default_config  = _config['default'];
+var _config         = require('../config/config');
 
 var Page = function (title) {
   this._title = title;
@@ -15,10 +14,6 @@ Page.prototype.siteName = function siteName () {
 
 Page.prototype.fullTitle = function fullTitle () {
   return this._title + ' | ' + this.siteName();
-};
-
-Page.prototype.assetVersion = function assetVersion () {
-  return default_config['asset_version'];
 };
 
 exports.Page = Page;
