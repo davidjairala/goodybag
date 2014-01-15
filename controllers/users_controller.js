@@ -3,7 +3,7 @@ var Page = require('../helpers/page_helper').Page,
     SignUpInteraction = require('../interactions/user/sign_up_interaction').SignUpInteraction,
     SignInInteraction = require('../interactions/user/sign_in_interaction').SignInInteraction;
 
-module.exports.controller = function controller (app) {
+exports.controller = function controller (app) {
 
   app.get('/sign_in', function (req, res) {
     res.render('users/sign_in', {page: page, username: ''});
