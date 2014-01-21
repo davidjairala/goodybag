@@ -8,7 +8,7 @@ describe('User Sign In Interaction', function () {
   describe('#login', function () {
 
     beforeEach(function (done) {
-      var sign_up_interaction = new SignUpInteraction({username: 'fakey', email: 'fakey@fake.com', password: 'real'});
+      var sign_up_interaction = new SignUpInteraction({username: 'fakey', email: 'fakey@fake.com', password: 'real', confirmPassword: 'real'});
 
       sign_up_interaction.save(function (err, doc) {
         done();
@@ -76,7 +76,7 @@ describe('User Sign In Interaction', function () {
   describe('#user', function () {
 
     beforeEach(function (done) {
-      var sign_up_interaction = new SignUpInteraction({username: 'fakey', email: 'fakey@fake.com', password: 'real'});
+      var sign_up_interaction = new SignUpInteraction({username: 'fakey', email: 'fakey@fake.com', password: 'real', confirmPassword: 'real'});
 
       sign_up_interaction.save(function (err, doc) {
         done();

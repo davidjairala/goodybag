@@ -29,7 +29,7 @@ exports.controller = function controller (app) {
   });
 
   app.post('/sign_up', function (req, res) {
-    var interaction = new SignUpInteraction({username: req.body.username, email: req.body.email, password: req.body.password});
+    var interaction = new SignUpInteraction({username: req.body.username, email: req.body.email, password: req.body.password, confirmPassword: req.body.confirm_password});
 
     interaction.save(function (err, user) {
       if(err) {
