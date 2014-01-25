@@ -14,7 +14,8 @@
     "mongoose":                   "*",
     "mongoose-unique-validator":  "*",
     "mongoose-timestamp":         "*",
-    "bcrypt-nodejs":              "*"
+    "bcrypt-nodejs":              "*",
+    "connect-flash":              "*"
   },
   "devDependencies": {
     "jake":                       "*",

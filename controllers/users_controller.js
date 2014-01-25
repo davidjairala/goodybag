@@ -15,11 +15,11 @@ exports.controller = function controller (app) {
 
     interaction.login(function (err, user) {
       if(err) {
-        res.locals.flashError = err;
+        res.flash('error', err);
         res.render('users/sign_in', {page: signInPage, username: interaction.username});
       } else {
-        res.locals.flashInfo = "Welcome " + interaction.username;
-        res.render('users/sign_in', {page: signInPage, username: interaction.username});
+        res.flash('info', "Welcome " + interaction.username, {redirect: true});
+        res.redirect('/');
       }
     });
   });
@@ -33,12 +33,11 @@ exports.controller = function controller (app) {
 
     interaction.save(function (err, user) {
       if(err) {
-
-        res.locals.flashError = err;
+        res.flash('error', err);
         res.render('users/sign_up', {page: signUpPage, username: interaction.username, email: interaction.email});
       } else {
-        res.locals.flashInfo = "Welcome " + interaction.username;
-        res.render('users/sign_in', {page: signUpPage, username: interaction.username});
+        res.flash('info', "Welcome " + interaction.username, {redirect: true});
+        res.redirect('/');
       }
     });
   });

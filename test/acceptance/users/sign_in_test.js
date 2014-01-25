@@ -6,7 +6,7 @@ var expect = require('expect.js'),
 
 describe('Acceptance: Sign In', function () {
 
-  before(function (done) {
+  beforeEach(function (done) {
     browser.visit('/sign_in', done);
   });
 
@@ -24,6 +24,7 @@ describe('Acceptance: Sign In', function () {
       browser.fill('password', 'testing');
       browser.pressButton('Sign In', function () {
         expect(browser.text('ul.info')).to.equal('Welcome testy');
+        expect(browser.location.pathname).to.equal('/');
 
         done();
       });
@@ -38,8 +39,23 @@ describe('Acceptance: Sign In', function () {
       browser.fill('password', 'nada');
       browser.pressButton('Sign In', function () {
         expect(browser.text('ul.errors')).to.equal('Wrong username or password.');
+        expect(browser.location.pathname).to.equal('/sign_in');
 
         done();
+      });
+    });
+
+    it('wrong password', function (done) {
+      fixtureBuilder.createUserTesty(function (err, user) {
+        browser.fill('username', 'testy');
+        browser.fill('password', 'wrongone');
+        browser.pressButton('Sign In', function () {
+          expect(browser.text('ul.errors')).to.equal('Wrong username or password.');
+          expect(browser.location.pathname).to.equal('/sign_in');
+
+          done();
+        });
+
       });
     });
 
