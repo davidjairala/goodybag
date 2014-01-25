@@ -1,6 +1,6 @@
 <% include ../layout/header %>
 
-<form method="POST" action="/sign_up">
+<form method="POST" action="/sign_up" class="sign_up_form">
   <% include ../layout/csrf %>
   <p>
     <label for="username">Username</label>
@@ -8,7 +8,7 @@
   </p>
 
   <p>
-    <label for="username">Email</label>
+    <label for="email">Email</label>
     <input type="text" id="email" name="email" value="<%= email %>" />
   </p>
 
@@ -18,13 +18,18 @@
   </p>
 
   <p>
-    <label for="password">Confirm password</label>
+    <label for="confirm_password">Confirm password</label>
     <input type="password" id="confirm_password" name="confirm_password" value="" />
   </p>
 
   <p>
-    <input type="submit" value="Sign Up" />
+    <label for="sign_up_button"></label>
+    <input type="submit" value="Create your account" id="sign_up_button" />
   </p>
 </form>
+
+<p>
+  Already have an account? <a href="/sign_in">Sign in</a>!
+</p>
 
 <% include ../layout/footer %>

@@ -14,9 +14,12 @@
     "mongoose":                   "*",
     "mongoose-unique-validator":  "*",
     "mongoose-timestamp":         "*",
-    "bcrypt-nodejs":              "*",
+    "bcrypt-nodejs":              "*"
+  },
+  "devDependencies": {
     "jake":                       "*",
     "mocha":                      "*",
-    "expect.js":                  "*"
+    "expect.js":                  "*",
+    "zombie":                     "*"
   }
 }

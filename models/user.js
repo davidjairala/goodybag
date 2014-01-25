@@ -4,11 +4,11 @@ var mongoose        = require('mongoose'),
     timestamps      = require('mongoose-timestamp');
 
 var userSchema  = new Schema({
-  username:   {type: String, required: true,  unique: true},
-  email:      {type: String,                  unique: true},
+  username:   {type: String, index: true, required: true,  unique: true},
+  email:      {type: String, index: true},
   password:   {type: String, required: true}
 });
-userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator, {message: '{PATH} already exists!'});
 userSchema.plugin(timestamps);
 
 var User = mongoose.model('user', userSchema);

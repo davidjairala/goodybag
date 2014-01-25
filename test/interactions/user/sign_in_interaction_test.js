@@ -109,7 +109,7 @@ describe('User Sign In Interaction', function () {
       interaction.user(function (err, doc) {
         expect(err).to.be.ok();
         expect(doc).to.not.be.ok();
-        expect(err.errors.sign_in_interaction.message).to.equal('Wrong username or password.');
+        expect(err.errors.sign_in_interaction).to.equal('Wrong username or password.');
         done();
       });
     });
@@ -130,7 +130,7 @@ describe('User Sign In Interaction', function () {
         interaction.user(function (err, doc) {
           expect(err).to.be.ok();
           expect(doc).to.not.be.ok();
-          expect(err.errors.sign_in_interaction.message).to.equal('Wrong username or password.');
+          expect(err.errors.sign_in_interaction).to.equal('Wrong username or password.');
           done();
         });
       });
@@ -141,7 +141,7 @@ describe('User Sign In Interaction', function () {
         interaction.user(function (err, doc) {
           expect(err).to.be.ok();
           expect(doc).to.not.be.ok();
-          expect(err.errors.sign_in_interaction.message).to.equal('Please enter a username or email and a password.');
+          expect(err.errors.sign_in_interaction).to.equal('Please enter a username or email and a password.');
           done();
         });
       });

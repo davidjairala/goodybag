@@ -70,8 +70,7 @@ describe('User Sign Up Interaction', function () {
 
       interaction.save(function (err, doc) {
         expect(doc).to.not.be.ok();
-        expect(err.errors.sign_up_interaction.type).to.equal('invalid');
-        expect(err.errors.sign_up_interaction.message).to.equal('Please enter username and password.');
+        expect(err.errors.sign_up_interaction).to.equal('Please enter username and password.');
         done();
       });
     });
@@ -83,8 +82,7 @@ describe('User Sign Up Interaction', function () {
 
       interaction.save(function (err, doc) {
         expect(doc).to.not.be.ok();
-        expect(err.errors.sign_up_interaction.type).to.equal('invalid');
-        expect(err.errors.sign_up_interaction.message).to.equal("Passwords don't match.");
+        expect(err.errors.sign_up_interaction).to.equal("Passwords don't match.");
         done();
       });
     });

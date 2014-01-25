@@ -1,13 +1,15 @@
 {
   "default": {
     "cookie_secret": "something_secret",
-    "port": 3000,
     "asset_version": 1
   },
   "test": {
+    "port": 6001
   },
   "development": {
+    "port": 3000
   },
   "production": {
+    "port": 8080
   }
 }

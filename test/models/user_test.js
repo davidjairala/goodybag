@@ -17,7 +17,7 @@ describe('User', function () {
           TestHelper.saveOk(err, doc);
 
           dup.save(function (err, doc) {
-            expect(err.errors.username.message).to.equal('Validator failed for path `username` with value `fakey`');
+            expect(err.errors.username.message).to.equal('username already exists!');
             expect(doc).to.not.be.ok();
 
             User.count({}, function (err, count) {

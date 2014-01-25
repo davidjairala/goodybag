@@ -4,7 +4,10 @@ var express         = require('express'),
     http            = require('http'),
     path            = require('path'),
     app             = express(),
-    middelware, initializer, route;
+    config          = require('./config/config'),
+    port, middelware, initializer, route;
+
+port = process.env.PORT ? process.env.PORT : config[app.get('env')]['port']
 
 // middleware
 fs.readdirSync(path.join(__dirname, 'config', 'middleware')).forEach(function (file) {
@@ -34,6 +37,8 @@ fs.readdirSync(path.join(__dirname, 'controllers')).forEach(function (file) {
     route.controller(app);
   }
 });
+
+app.set('port', port);
 
 http.createServer(app).listen(app.get('port'), function (){
   console.log('Express server listening on port ' + app.get('port'));

@@ -1,12 +1,13 @@
 var Page = require('../helpers/page_helper').Page,
-    page = new Page('Sign In'),
+    signInPage = new Page('Sign in'),
+    signUpPage = new Page('Create your account'),
     SignUpInteraction = require('../interactions/user/sign_up_interaction').SignUpInteraction,
     SignInInteraction = require('../interactions/user/sign_in_interaction').SignInInteraction;
 
 exports.controller = function controller (app) {
 
   app.get('/sign_in', function (req, res) {
-    res.render('users/sign_in', {page: page, username: ''});
+    res.render('users/sign_in', {page: signInPage, username: ''});
   });
 
   app.post('/sign_in', function (req, res) {
@@ -14,18 +15,17 @@ exports.controller = function controller (app) {
 
     interaction.login(function (err, user) {
       if(err) {
-        res.locals.flashError = err.errorMessage();
-        res.render('users/sign_in', {page: page, username: interaction.username});
-      }
-      else {
+        res.locals.flashError = err;
+        res.render('users/sign_in', {page: signInPage, username: interaction.username});
+      } else {
         res.locals.flashInfo = "Welcome " + interaction.username;
-        res.render('users/sign_in', {page: page, username: interaction.username});
+        res.render('users/sign_in', {page: signInPage, username: interaction.username});
       }
     });
   });
 
   app.get('/sign_up', function (req, res) {
-    res.render('users/sign_up', {page: page, username: '', email: ''});
+    res.render('users/sign_up', {page: signUpPage, username: '', email: ''});
   });
 
   app.post('/sign_up', function (req, res) {
@@ -33,11 +33,12 @@ exports.controller = function controller (app) {
 
     interaction.save(function (err, user) {
       if(err) {
-        res.locals.flashError = err.errorMessage();
-        res.render('users/sign_up', {page: page, username: interaction.username, email: interaction.email});
+
+        res.locals.flashError = err;
+        res.render('users/sign_up', {page: signUpPage, username: interaction.username, email: interaction.email});
       } else {
         res.locals.flashInfo = "Welcome " + interaction.username;
-        res.render('users/sign_in', {page: page, username: interaction.username});
+        res.render('users/sign_in', {page: signUpPage, username: interaction.username});
       }
     });
   });

@@ -1,0 +1,15 @@
+<% var keys; %>
+<% if(flashError) { %>
+  <ul class="errors">
+    <% keys = Object.keys(flashError.errors); %>
+    <% for(var i = 0; i < keys.length; i++) { %>
+      <li><%= flashError.errors[keys[i]] %></li>
+    <% } %>
+  </ul>
+<% } %>
+
+<% if(flashInfo) { %>
+  <ul class="info">
+    <li><%= flashInfo %></li>
+  </ul>
+<% } %>
