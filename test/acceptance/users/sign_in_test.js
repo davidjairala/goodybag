@@ -2,7 +2,9 @@ var expect = require('expect.js'),
     TestHelper = require('../../test_helper'),
     fixtureBuilder = new TestHelper.FixtureBuilder(),
     acceptanceHelper = TestHelper.acceptanceHelper,
-    browser = acceptanceHelper.browser();
+    browser = acceptanceHelper.browser(),
+    User = require('../../../models/user').User,
+    Session = require('../../../models/session').Session;
 
 describe('Acceptance: Sign In', function () {
 
@@ -27,6 +29,31 @@ describe('Acceptance: Sign In', function () {
         expect(browser.location.pathname).to.equal('/');
 
         done();
+      });
+
+    });
+  });
+
+  it('saves the session', function (done) {
+    expect(browser.link('.sign_in_link')).to.be.ok();
+    expect(browser.link('.logout_link')).to.not.be.ok();
+
+    fixtureBuilder.createUserTesty(function (err, user) {
+      browser.fill('username', 'testy');
+      browser.fill('password', 'testing');
+      browser.pressButton('Sign In', function () {
+        User.findOne({username: 'testy'}, function (err, user) {
+          TestHelper.saveOk(err, user);
+
+          Session.findOne({userId: user.id}, function (err, session) {
+            TestHelper.saveOk(err, session);
+
+            expect(browser.link('.sign_in_link')).to.not.be.ok();
+            expect(browser.link('.logout_link')).to.be.ok();
+
+            done();
+          });
+        });
       });
 
     });

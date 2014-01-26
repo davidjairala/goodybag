@@ -16,9 +16,13 @@ describe('User Sign In Interaction', function () {
     });
 
     it('creates a session for the user', function (done) {
-      var interaction = new Interaction({username: 'fakey', password: 'real'});
+      var interaction = new Interaction({username: 'fakey', password: 'real'}),
+          ResStub     = function ResStub () {}
+          res         = new ResStub();
 
-      interaction.login(function (err, doc) {
+      ResStub.prototype.cookie = function cookie (name, value, options) {};
+
+      interaction.login(res, function (err, doc) {
         TestHelper.saveOk(err, doc);
 
         expect(doc.hash).to.be.ok();

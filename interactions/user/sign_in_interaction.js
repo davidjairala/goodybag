@@ -12,6 +12,7 @@ var SignInInteraction = function SignInInteraction (options) {
   this.username = options.username;
   this.password = options.password;
   this.email    = options.email;
+  this.hash     = crypto.randomBytes(20).toString('hex');
 };
 
 SignInInteraction.prototype.valid = function valid () {
@@ -61,26 +62,33 @@ SignInInteraction.prototype.user = function user (callback) {
   }
 };
 
-SignInInteraction.prototype.hash = function hash () {
-  return crypto.randomBytes(20).toString('hex');
+SignInInteraction.prototype.saveCookie = function saveCookie (res, callback) {
+  res.cookie('goodybag_user_session', this.hash, {signed: true, expires: new Date(Date.now() + (9000 * 60 * 1000)), httpOnly: true});
+  return callback(null);
 };
 
 SignInInteraction.prototype.createSession = function createSession (user, callback) {
-  var session = new Session({userId: user.id, hash: this.hash()});
+  var session = new Session({userId: user.id, hash: this.hash});
 
   session.save(function (err, doc) {
     return callback(err, doc);
   });
 };
 
-SignInInteraction.prototype.login = function login (callback) {
-  this.user(function (err, doc) {
+SignInInteraction.prototype.login = function login (res, callback) {
+  this.user(function (err, user) {
     if(err) {
       return callback(err, null);
     } else {
-      this.createSession(doc, function (err, doc) {
-        return callback(err, doc);
-      });
+      this.createSession(user, function (err, user) {
+        if(err) {
+          return callback(err, user);
+        } else {
+          this.saveCookie(res, function (err) {
+            return callback(err, user);
+          });
+        }
+      }.bind(this));
     }
   }.bind(this));
 };

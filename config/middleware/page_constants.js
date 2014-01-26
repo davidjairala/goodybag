@@ -6,10 +6,10 @@ exports.handler = function handler (app) {
 
   app.use(function (req, res, next) {
     res.locals.assetVersion = default_config['asset_version'];
-    res.locals.flashInfo   = req.flash('info')[0];
-    res.locals.flashError  = req.flash('error')[0];
+    res.locals.flashInfo    = req.flash('info')[0];
+    res.locals.flashError   = req.flash('error')[0];
 
-    res.locals.flash = function (type, msg, options) {
+    res.flash = function (type, msg, options) {
       options = options || {};
 
       if(options.redirect) {
@@ -22,8 +22,6 @@ exports.handler = function handler (app) {
         }
       }
     };
-
-    res.flash = res.locals.flash;
 
     next();
   });

@@ -1,6 +1,6 @@
-var _config         = require('../config/config');
+var _config = require('../config/config');
 
-var Page = function (title) {
+var Page = function (title, req) {
   this._title = title;
 };
 

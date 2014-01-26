@@ -13,7 +13,7 @@ exports.controller = function controller (app) {
   app.post('/sign_in', function (req, res) {
     var interaction = new SignInInteraction({username: req.body.username, password: req.body.password});
 
-    interaction.login(function (err, user) {
+    interaction.login(res, function (err, user) {
       if(err) {
         res.flash('error', err);
         res.render('users/sign_in', {page: signInPage, username: interaction.username});
