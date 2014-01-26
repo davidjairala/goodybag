@@ -62,9 +62,8 @@ SignInInteraction.prototype.user = function user (callback) {
   }
 };
 
-SignInInteraction.prototype.saveCookie = function saveCookie (res, callback) {
+SignInInteraction.prototype.saveCookie = function saveCookie (res) {
   res.cookie('goodybag_user_session', this.hash, {signed: true, expires: new Date(Date.now() + (9000 * 60 * 1000)), httpOnly: true});
-  return callback(null);
 };
 
 SignInInteraction.prototype.createSession = function createSession (user, callback) {
@@ -84,9 +83,8 @@ SignInInteraction.prototype.login = function login (res, callback) {
         if(err) {
           return callback(err, user);
         } else {
-          this.saveCookie(res, function (err) {
-            return callback(err, user);
-          });
+          this.saveCookie(res);
+          return callback(null, user);
         }
       }.bind(this));
     }

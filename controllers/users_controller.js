@@ -2,7 +2,8 @@ var Page = require('../helpers/page_helper').Page,
     signInPage = new Page('Sign in'),
     signUpPage = new Page('Create your account'),
     SignUpInteraction = require('../interactions/user/sign_up_interaction').SignUpInteraction,
-    SignInInteraction = require('../interactions/user/sign_in_interaction').SignInInteraction;
+    SignInInteraction = require('../interactions/user/sign_in_interaction').SignInInteraction,
+    LogoutInteraction = require('../interactions/user/logout_interaction').LogoutInteraction;
 
 exports.controller = function controller (app) {
 
@@ -39,6 +40,19 @@ exports.controller = function controller (app) {
         res.flash('info', "Welcome " + interaction.username, {redirect: true});
         res.redirect('/');
       }
+    });
+  });
+
+  app.get('/logout', function (req, res) {
+    var interaction = new LogoutInteraction(req, res);
+    interaction.logout(function (err) {
+      if(err) {
+        res.flash('error', err, {redirect: true});
+      } else {
+        res.flash('info', 'You have logged out successfully', {redirect: true});
+      }
+
+      res.redirect('/');
     });
   });
 
