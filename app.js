@@ -21,7 +21,9 @@ fs.readdirSync(path.join(__dirname, 'config', 'middleware')).forEach(function (f
 fs.readdirSync(path.join(__dirname, 'config', 'initializers')).forEach(function (file) {
   if(file.substr(-3) == '.js') {
     initializer = require('./config/initializers/' + file);
-    initializer.handler(app);
+
+    if(typeof initializer.handler === 'function')
+      initializer.handler(app);
   }
 });
 

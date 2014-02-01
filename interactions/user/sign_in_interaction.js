@@ -3,29 +3,27 @@ var User              = require('../../models/user').User,
     crypto            = require('crypto'),
     InteractionError  = require('../interaction_error').InteractionError,
     passwordHelper    = require('./password_interaction_helper'),
-    stringService     = require('../../lib/string_service'),
     Session           = require('../../models/session').Session;
 
 var SignInInteraction = function SignInInteraction (options) {
   options = options || {};
 
-  this.username = options.username;
-  this.password = options.password;
-  this.email    = options.email;
+  this.username = options.username  || '';
+  this.password = options.password  || '';
+  this.email    = options.email     || '';
   this.hash     = crypto.randomBytes(20).toString('hex');
 };
 
 SignInInteraction.prototype.valid = function valid () {
-  return (stringService.clean(this.username) !== '' || stringService.clean(this.email) !== '') && 
-          stringService.clean(this.password) !== '';
+  return (this.username.present() || this.email.present()) && this.password.present();
 }
 
 SignInInteraction.prototype.searchOptions = function searchOptions () {
   var options = {};
 
-  if(stringService.clean(this.username) !== '')
+  if(this.username.present())
     options = {username: this.username};
-  else if(stringService.clean(this.email) !== '')
+  else if(this.email.present())
     options = {email: this.email};
 
   return options;

@@ -1,21 +1,18 @@
 var User              = require('../../models/user').User,
-    stringService     = require('../../lib/string_service'),
     InteractionError  = require('../interaction_error').InteractionError,
     passwordHelper    = require('./password_interaction_helper');
 
 var SignUpInteraction = function SignUpInteraction (options) {
   options = options || {};
 
-  this.username         = options.username;
-  this.password         = options.password;
-  this.confirmPassword  = options.confirmPassword;
-  this.email            = options.email;
+  this.username         = options.username        || '';
+  this.password         = options.password        || '';
+  this.confirmPassword  = options.confirmPassword || '';
+  this.email            = options.email           || '';
 };
 
 SignUpInteraction.prototype.valid = function valid () {
-  return  stringService.clean(this.password)        !== '' &&
-          stringService.clean(this.confirmPassword) !== '' &&
-          stringService.clean(this.username)        !== '';
+  return  this.password.present() && this.confirmPassword.present() && this.username.present();
 }
 
 SignUpInteraction.prototype.passwordsMatch = function passwordsMatch () {
