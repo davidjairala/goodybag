@@ -6,10 +6,11 @@ var mongoose        = require('mongoose'),
 
 var listSchema = new Schema({
   userId: {type: Schema.ObjectId, index: true, required: true, ref: 'User'},
-  name:   {type: String, required: true}
+  name:   {type: String, required: true},
+  description: {type: String}
 });
 listSchema.plugin(uniqueValidator, {message: messages.errors.unique});
-userSchema.plugin(timestamps);
+listSchema.plugin(timestamps);
 
 var List = mongoose.model('list', listSchema);
 
